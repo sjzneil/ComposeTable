@@ -19,6 +19,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import cn.ning.composetable.ui.theme.ComposeTableTheme
+import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
     @ExperimentalFoundationApi
@@ -32,14 +33,29 @@ class MainActivity : ComponentActivity() {
                         row = 200,
                         col = 300,
                         columnHeader = {
-                            Text(
-                                text = "tableHeader",
-                                style = TextStyle(color = Color.Black),
-                                textAlign = TextAlign.Center,
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .background(Color.Green),
-                            )
+                            stickyHeader() {
+                                Text(
+                                    text = "corner",
+                                    style = TextStyle(color = Color.Black),
+                                    textAlign = TextAlign.Center,
+                                    modifier = Modifier
+                                        .width(50.dp)
+                                        .height(30.dp)
+                                        .background(Color.Green),
+                                )
+                            }
+                            items(300) { col ->
+                                Text(
+                                    text = "colHeader_${col}",
+                                    style = TextStyle(color = Color.Black),
+                                    textAlign = TextAlign.Center,
+                                    modifier = Modifier
+                                        .width(80.dp)
+                                        .height(30.dp)
+                                        .background(Color.Cyan),
+                                )
+                            }
+
                         },
                         rowHeader = {
                             Text(

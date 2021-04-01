@@ -2,6 +2,7 @@ package cn.ning.composetable
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
@@ -18,7 +19,7 @@ import kotlinx.coroutines.launch
 fun table(
     row: Int = 0,
     col: Int = 0,
-    columnHeader: @Composable (() -> Any)? = null,
+    columnHeader: (LazyListScope.() -> Any)? = null,
     rowHeader: @Composable ((Int) -> Any)? = null,
     itemContent: @Composable ((Int, Int) -> Any)? = null,
 ) {
@@ -34,7 +35,12 @@ fun table(
     val coroutineScope = rememberCoroutineScope()
     LazyColumn {
         stickyHeader {
-            columnHeader?.invoke()
+            LazyRow(state=scrollState) {
+                columnHeader?.invoke(this)
+            }
+            coroutineScope.launch {
+                scrollState.scrollToItem(item.value, scroll.value)
+            }
         }
         items(row) { row ->
             LazyRow(state = scrollState) {
