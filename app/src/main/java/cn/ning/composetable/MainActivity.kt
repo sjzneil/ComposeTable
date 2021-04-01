@@ -33,7 +33,7 @@ class MainActivity : ComponentActivity() {
                         row = 200,
                         col = 300,
                         columnHeader = {
-                            stickyHeader() {
+                            corner {
                                 Text(
                                     text = "corner",
                                     style = TextStyle(color = Color.Black),
@@ -44,7 +44,7 @@ class MainActivity : ComponentActivity() {
                                         .background(Color.Green),
                                 )
                             }
-                            items(300) { col ->
+                            colHeaders(300) { col ->
                                 Text(
                                     text = "colHeader_${col}",
                                     style = TextStyle(color = Color.Black),
